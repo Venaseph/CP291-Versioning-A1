@@ -11,25 +11,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // in onCreate, will not run when app is switched back to
+        // in onCreate, will not run when app is switched back to after initial startup
 
         String version = "";
-        try {
-            version = getAndroidVersion();
+        boolean thrown = false;
 
+        try {
+            version = getVersion();
         } catch (Exception e) {
             e.printStackTrace();
+            thrown = true;
         }
 
-
-        TextView tv = findViewById(R.id.tvid);
-        tv.setText(version);
-        // tv.setText(R.string.outdated);
-
-
+        if (!thrown){
+            TextView tv = findViewById(R.id.tvid);
+            tv.setText(version);
+            // tv.setText(R.string.outdated);
+        }
     }
 
-    private String getAndroidVersion() {
+    private String getVersion() {
         String release = Build.VERSION.RELEASE;
         int sdkVersion = Build.VERSION.SDK_INT;
         return "Android SDK: " + sdkVersion + " (" + release +")";
