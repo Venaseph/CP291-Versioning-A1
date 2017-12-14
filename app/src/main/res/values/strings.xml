@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Versioning</string>
+    <string name="current">Splendid, system is up to date!</string>
+    <string name="outdated">Try again, system is antiquated!</string>
 </resources>
