@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Versioning Application</string>
-    <string name="current">Splendid, system is up to date!</string>
-    <string name="outdated">Try again, system is antiquated!</string>
+    <string name="current">Your system is up to date!</string>
+    <string name="outdated">Your system is antiquated!</string>
     <string name="undetectable">Error:System Version Undetectable</string>
     <string name="port">Portrait</string>
     <string name="land">Landscape</string>

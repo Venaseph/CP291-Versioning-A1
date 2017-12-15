@@ -1,12 +1,15 @@
 package com.example.cpera.versioning;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import static java.lang.String.valueOf;
 
+public class MainActivity extends AppCompatActivity {
+    int num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
             tv.setText(version);
 
             //set message textView via TerBool
-            boolean message = Build.VERSION.SDK_INT > 25;
+            boolean message = Build.VERSION.SDK_INT < 25;
             TextView ms = findViewById(R.id.message);
             if (message) {
                 ms.setText(R.string.current);
+                ms.setTextColor(Color.BLUE);
             } else {
                 ms.setText(R.string.outdated);
+                ms.setTextColor(Color.RED);
             }
         }
 
@@ -45,7 +50,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             lo.setText(R.string.land);
         }
+
+        TextView oc = findViewById(R.id.count);
+        num++;
+        oc.setText(valueOf(num));
     }
+
     // toString for version
     public String getVersion() {
         String release = Build.VERSION.RELEASE;
