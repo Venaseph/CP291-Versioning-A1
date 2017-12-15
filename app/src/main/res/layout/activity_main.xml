@@ -37,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_marginStart="15dp"
-        android:text="orientation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

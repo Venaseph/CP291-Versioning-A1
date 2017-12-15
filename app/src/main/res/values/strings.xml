@@ -3,6 +3,4 @@
     <string name="current">Your system is up to date!</string>
     <string name="outdated">Your system is antiquated!</string>
     <string name="undetectable">Error:System Version Undetectable</string>
-    <string name="port">Portrait</string>
-    <string name="land">Landscape</string>
 </resources>

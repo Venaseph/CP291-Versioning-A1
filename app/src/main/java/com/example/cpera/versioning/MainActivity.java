@@ -1,15 +1,20 @@
 package com.example.cpera.versioning;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
+import static android.app.PendingIntent.getActivity;
 import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
-    int num;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             tv.setText(version);
 
             //set message textView via TerBool
-            boolean message = Build.VERSION.SDK_INT < 25;
+            boolean message = Build.VERSION.SDK_INT > 25;
             TextView ms = findViewById(R.id.message);
             if (message) {
                 ms.setText(R.string.current);
@@ -44,15 +49,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         boolean layout = getResources().getConfiguration().orientation == 1;
-        TextView lo = findViewById(R.id.layout);
         if (layout) {
-            lo.setText(R.string.port);
+            Toast.makeText(MainActivity.this, "Portrait", Toast.LENGTH_LONG).show();
         } else {
-            lo.setText(R.string.land);
+            Toast.makeText(MainActivity.this, "Landscape", Toast.LENGTH_LONG).show();
         }
 
-        TextView oc = findViewById(R.id.count);
+        //initialize SharedPref & create editor for sharedPref
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPref.edit();
+
+        //check if reloads exists in sharedPref, if not create
+        boolean check = sharedPref.contains("reloads");
+        if (!check) {
+           edit.putInt("reload", 0);
+           //Don't forget to commit!
+           edit.commit();
+        }
+
+        //increment reloads
+        int num = sharedPref.getInt("reload", 0);
         num++;
+        edit.putInt("reload", num);
+        edit.commit();
+
+        TextView oc = findViewById(R.id.count);
         oc.setText(valueOf(num));
     }
 
