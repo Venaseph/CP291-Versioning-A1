@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.widget.Toast;
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         versioningStuff();
         rotationsStuff();
         sharedprefStuff();
+        buttonStuff();
+        visiState();
     }
 
     // versioning detection stuff
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void sharedprefStuff() {
         //initialize SharedPref & create editor for sharedPref (non-fragment version)
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -86,6 +91,57 @@ public class MainActivity extends AppCompatActivity {
         //set TextView to reload value
         TextView oc = findViewById(R.id.count);
         oc.setText(valueOf(num));
+    }
+
+    private void buttonStuff() {
+        //create onclick and instan button
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            //click control
+            public void onClick(View v) {
+                //sharedPrefStuff for visiState control
+                SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = sharedPref.edit();
+                TextView cl = findViewById(R.id.countLabel);
+                TextView oc = findViewById(R.id.count);
+                TextView btn = findViewById(R.id.button);
+
+                boolean canYouSeeMe = sharedPref.getBoolean("visible", false);
+                if (!canYouSeeMe) {
+                    cl.setVisibility(View.VISIBLE);
+                    btn.setText(R.string.less);
+                    oc.setVisibility((View.VISIBLE));
+                    edit.putBoolean("visible", true).commit();
+                } else {
+                    cl.setVisibility(View.INVISIBLE);
+                    btn.setText(R.string.more);
+                    oc.setVisibility((View.INVISIBLE));
+                    edit.putBoolean("visible", false ).commit();
+                }
+            }
+        });
+    }
+
+    private void visiState() {
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPref.edit();
+        TextView cl = findViewById(R.id.countLabel);
+        TextView oc = findViewById(R.id.count);
+        TextView btn = findViewById(R.id.button);
+
+        boolean canYouSeeMe = sharedPref.getBoolean("visible", false);
+        if(canYouSeeMe) {
+            cl.setVisibility(View.VISIBLE);
+            btn.setText(R.string.less);
+            oc.setVisibility((View.VISIBLE));
+            edit.putBoolean("visible", true).commit();
+        } else {
+            cl.setVisibility(View.INVISIBLE);
+            btn.setText(R.string.more);
+            oc.setVisibility((View.INVISIBLE));
+            edit.putBoolean("visible", false ).commit();
+        }
     }
 
 }
