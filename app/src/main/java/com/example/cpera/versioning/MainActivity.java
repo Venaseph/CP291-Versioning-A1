@@ -1,6 +1,5 @@
 package com.example.cpera.versioning;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,8 +8,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.widget.Toast;
-
-import static android.app.PendingIntent.getActivity;
 import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,20 +56,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPref.edit();
 
-        //check if reloads exists in sharedPref, if not create
-        boolean check = sharedPref.contains("reloads");
-        if (!check) {
-           edit.putInt("reload", 0);
-           //Don't forget to commit!
-           edit.commit();
-        }
-
-        //increment reloads
+        //increment reloads get only sets if key/value doesn't exist
         int num = sharedPref.getInt("reload", 0);
         num++;
         edit.putInt("reload", num);
         edit.commit();
 
+        //set TextView to reload value
         TextView oc = findViewById(R.id.count);
         oc.setText(valueOf(num));
     }
