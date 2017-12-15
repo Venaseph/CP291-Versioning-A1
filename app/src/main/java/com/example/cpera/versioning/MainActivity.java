@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String version = "@string/undetectable";
+        String version = null;
         boolean thrown = false;
 
         try {
@@ -52,13 +52,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Landscape", Toast.LENGTH_LONG).show();
         }
 
-        //initialize SharedPref & create editor for sharedPref
+        //initialize SharedPref & create editor for sharedPref (non-fragment version)
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPref.edit();
 
-        //increment reloads get only sets if key/value doesn't exist
+        //increment reloads getType only sets if key/value doesn't exist
         int num = sharedPref.getInt("reload", 0);
         num++;
+        //update value
         edit.putInt("reload", num);
         edit.commit();
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         return "Android SDK: " + sdkVersion + " (" + release +")";
     }
 }
+
 
 
 

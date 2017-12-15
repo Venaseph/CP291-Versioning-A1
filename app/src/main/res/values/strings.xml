@@ -3,4 +3,5 @@
     <string name="current">Your system is up to date!</string>
     <string name="outdated">Your system is antiquated!</string>
     <string name="undetectable">Error:System Version Undetectable</string>
+    <string name="ActivReload">MainActivity has reloaded</string>
 </resources>
