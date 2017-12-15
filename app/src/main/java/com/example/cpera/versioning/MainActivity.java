@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         num++;
         //update value
         edit.putInt("reload", num);
+        //save it
         edit.commit();
 
         //set TextView to reload value
