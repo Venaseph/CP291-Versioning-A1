@@ -1,5 +1,6 @@
 package com.example.cpera.versioning;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -10,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
 import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,15 +23,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        versioningStuff();
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPref.edit();
+        TextView tv = findViewById(R.id.tvid);
+        TextView ms = findViewById(R.id.message);
+        TextView cl = findViewById(R.id.countLabel);
+        TextView oc = findViewById(R.id.count);
+        TextView btn = findViewById(R.id.button);
+
+        versioningStuff(tv, ms);
         rotationsStuff();
-        sharedprefStuff();
+        sharedprefStuff(oc);
         buttonStuff();
-        visiState();
+        visiState(cl, btn, oc);
     }
 
     // versioning detection stuff
-    private void versioningStuff() {
+    private void versioningStuff(TextView tv, TextView ms) {
         String version = null;
         boolean thrown = false;
 
@@ -41,12 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (!thrown){
             //set version textView
-            TextView tv = findViewById(R.id.tvid);
             tv.setText(version);
 
             //set message textView via TerBool
             boolean message = Build.VERSION.SDK_INT > 22;
-            TextView ms = findViewById(R.id.message);
             if (message) {
                 ms.setText(R.string.current);
                 ms.setTextColor(Color.BLUE);
@@ -75,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void sharedprefStuff() {
+    private void sharedprefStuff(TextView oc) {
         //initialize SharedPref & create editor for sharedPref (non-fragment version)
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPref.edit();
@@ -89,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         edit.commit();
 
         //set TextView to reload value
-        TextView oc = findViewById(R.id.count);
         oc.setText(valueOf(num));
     }
 
@@ -123,12 +132,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void visiState() {
+    private void visiState(TextView cl, TextView btn, TextView oc) {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPref.edit();
-        TextView cl = findViewById(R.id.countLabel);
-        TextView oc = findViewById(R.id.count);
-        TextView btn = findViewById(R.id.button);
 
         boolean canYouSeeMe = sharedPref.getBoolean("visible", false);
         if(canYouSeeMe) {
@@ -143,5 +149,4 @@ public class MainActivity extends AppCompatActivity {
             edit.putBoolean("visible", false ).commit();
         }
     }
-
 }
