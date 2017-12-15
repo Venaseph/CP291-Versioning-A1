@@ -17,6 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        versioningStuff();
+        rotationsStuff();
+        sharedprefStuff();
+    }
+
+    // versioning detection stuff
+    private void versioningStuff() {
         String version = null;
         boolean thrown = false;
 
@@ -34,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             tv.setText(version);
 
             //set message textView via TerBool
-            boolean message = Build.VERSION.SDK_INT > 25;
+            boolean message = Build.VERSION.SDK_INT > 22;
             TextView ms = findViewById(R.id.message);
             if (message) {
                 ms.setText(R.string.current);
@@ -44,14 +51,26 @@ public class MainActivity extends AppCompatActivity {
                 ms.setTextColor(Color.RED);
             }
         }
+    }
 
+    // toString for version
+    private String getVersion() {
+        String release = Build.VERSION.RELEASE;
+        int sdkVersion = Build.VERSION.SDK_INT;
+        return "Android SDK: " + sdkVersion + " (" + release +")";
+    }
+
+    // rotation detection and toast stuff
+    private void rotationsStuff() {
         boolean layout = getResources().getConfiguration().orientation == 1;
         if (layout) {
-            Toast.makeText(MainActivity.this, "Portrait", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Portrait", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, "Landscape", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Landscape", Toast.LENGTH_SHORT).show();
         }
+    }
 
+    private void sharedprefStuff() {
         //initialize SharedPref & create editor for sharedPref (non-fragment version)
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPref.edit();
@@ -68,70 +87,4 @@ public class MainActivity extends AppCompatActivity {
         oc.setText(valueOf(num));
     }
 
-    // toString for version
-    public String getVersion() {
-        String release = Build.VERSION.RELEASE;
-        int sdkVersion = Build.VERSION.SDK_INT;
-        return "Android SDK: " + sdkVersion + " (" + release +")";
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// test
